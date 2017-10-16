@@ -9,28 +9,27 @@
 
 library(shiny)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("Plot Random Numbers"),
-  
-  # Sidebar 
+ui <- fluidPage(
+  titlePanel("Iris Species Predictor"),
   sidebarLayout(
     sidebarPanel(
-      numericInput("numeric", "How Many Random Numbers Should be Plotted?",
-                   value = 1000, min = 1, max = 1000, step = 1),
-      sliderInput("sliderX", "Pick Minimum and Maximum X Values",
-                  -100,100, value = c(-50,50)),
-      sliderInput("sliderY", "Pick Minimum and Maximum Y Values",
-                  -100, 100, value = c(-50,50)),
-      checkboxInput("show_xlab", "Show/Hide X Axis Label", value = TRUE),
-      checkboxInput("show_ylab", "Show/Hide Y Axis Label", value = TRUE),
-      checkboxInput("show_title", "Show/Hide Title")
-    ),
+      sliderInput(
+        inputId = "petal.length",
+        label = "Petal Length (cm)",
+        min = 1,
+        max = 7,
+        value = 4),
+      sliderInput(
+        inputId = "petal.width",
+        label = "Petal Width (cm)",
+        min = 0.0,
+        max = 2.5,
+        step = 0.5,
+        value = 1.5),
+      p("To predict a species of iris flower, please select the petal length and the petal width using the two sliders above."),
+      p("The predicted species will be displayed in the text on the top right. In addition, a data visualization in the bottom right will show how the decision was made. The lines represent the decision boundaries and the red X represents your selected input.")),
     mainPanel(
-      h3("Graph of Random Points"),
-       plotOutput("plot1")
-    )
-  )
-))
+      textOutput(
+        outputId = "text"),
+      plotOutput(
+        outputId = "plot"))))
